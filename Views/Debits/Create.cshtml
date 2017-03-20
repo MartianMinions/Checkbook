@@ -1,0 +1,72 @@
+@model CheckBook.Models.Debit
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+
+<h2>Add a New Deduction to Your Account</h2>
+
+<p>This is where you add in your purchases and any money that you have spent</p>
+
+<form asp-action="Create">
+    <div class="form-horizontal">
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="date" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="date" class="form-control" />
+                <span asp-validation-for="date" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="description" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="description" class="form-control" placeholder="What did you purchase?" />
+                <span asp-validation-for="description" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="paymentMethod" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="paymentMethod" class="form-control" placeholder="Cash... Credit Card..." />
+                <span asp-validation-for="paymentMethod" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="price" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="price" class="form-control" data-val="true" data-val-number="The field Price must only be a number" placeholder="How much did it cost?"/>
+                <span asp-validation-for="price" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="accountType" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <select class="form-control" id="accountType" name="accountType">
+                    <option disabled selected hidden>Please choose...</option>
+                    @foreach (var item in ViewBag.accountsData)
+                    {
+                        <option>@item.accountName</option>
+                    }
+                </select>
+                <a asp-area="" asp-controller="AccountTypes" asp-action="Create">Add an account</a>
+                <span asp-validation-for="accountType " class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

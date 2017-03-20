@@ -1,0 +1,102 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@using CheckBook.Models
+@model Tuple<Debit, Credit>
+
+<script src="~/js/methods.js"></script>
+
+
+<h1>
+    Total Amount of Money Available: <font id="headerTotal" name="amount"></font>
+</h1>
+
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Credit Total
+                </th>
+                <th>
+                    Debit Total
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>
+                    @ViewBag.CreditTotal
+                </th>
+                <th>
+                    @ViewBag.DebitTotal
+                </th>
+            </tr>
+
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+
+                </th>
+                @foreach (var account in ViewBag.AccountNames)
+                {
+                    <th>
+                        @account
+                    </th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>
+                    Deposits
+                </th>
+                @foreach (var credit in ViewBag.CreditTotals)
+                {
+                    <th style="color:#00BFFF">
+                        @credit
+                    </th>
+                }
+            </tr>
+            <tr>                
+                <th>
+                    Withdrawals
+                </th>
+                @foreach (var debit in ViewBag.DebitTotals)
+                {
+                    <th style="color:#B22222">
+                        @debit
+                    </th>
+                }
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+
+<script type="text/javascript">
+    function changeTotalColor() {
+        var amount = @ViewBag.TotalAmount;
+        var documentDisplayedAmount = document.getElementById("headerTotal");
+
+
+        if (amount > 0) {
+            documentDisplayedAmount.innerHTML = "$" + @ViewBag.TotalAmount;
+            documentDisplayedAmount.style.color = "#00BFFF";
+        } else {
+            amount = Math.abs(@ViewBag.TotalAmount);
+            documentDisplayedAmount.innerHTML = "($" + amount + ")";
+            documentDisplayedAmount.style.color = "#B22222";
+        }
+    };
+    changeTotalColor();
+</script>

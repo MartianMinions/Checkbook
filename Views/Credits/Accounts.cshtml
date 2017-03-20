@@ -1,0 +1,76 @@
+@model IEnumerable<CheckBook.Models.Credit>
+
+@{
+    ViewData["Title"] = "Checking";
+}
+
+<h2>@ViewBag.Name</h2>
+
+<p>
+    <a asp-area="" asp-controller="AccountTypes" asp-action="Create">Add an account</a>
+</p>
+
+<h4>@ViewBag.String</h4>
+
+<form asp-controller="Credits" asp-action="Accounts">
+    <p>
+        @*Description: <input type="text" name="SearchString" />*@
+        <select name="SearchString">
+            <option disabled selected hidden>Please choose...</option>
+            @*<option>Checking</option>
+            <option>Savings</option>
+            <option>Cash</option>
+            <option>Other</option>*@
+            @foreach (var item in ViewBag.accountsData)
+            {
+                <option>@item.accountName</option>
+
+            }
+        </select>
+        <input type="submit" value="Search" />
+    </p>
+</form>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.date)
+            </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.paymentForm)
+            </th>*@
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.amount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.description)
+            </td>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.price)
+            </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.date)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
